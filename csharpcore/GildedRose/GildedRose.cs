@@ -70,10 +70,6 @@ namespace GildedRoseKata
                 item.Quality = item.Quality - 1;
             }
             item.SellIn = item.SellIn - 1;
-            if (item.SellIn >= 0 && item.Quality < 50)
-            {
-                item.Quality = item.Quality + 1;
-            }
 
             if (item.SellIn < 0)
                 item.Quality = item.Quality - item.Quality;
@@ -85,29 +81,47 @@ namespace GildedRoseKata
             }
         }
 
+        private void UpdateConjured(Item item)
+        {
+            if (item.Quality > 0)
+            {
+                item.Quality = item.Quality - 2;
+            }
+            item.SellIn = item.SellIn - 1;
+
+            if (item.SellIn < 0)
+                item.Quality = item.Quality - item.Quality;
+            if (item.SellIn < 0 && item.Quality > 0)
+            {
+
+                item.Quality = item.Quality - 2;
+
+            }
+        }
+
         public void UpdateQuality()
         {
-            for (var i = 0; i < Items.Count; i++)
+            foreach (var item in Items)
             {
-                if (Items[i].Name == "Aged Brie")
+                if (item.Name == "Aged Brie")
                 {
-                    UpdateAgedBrie(Items[i]);
+                    UpdateAgedBrie(item);
                 }
-                else if (Items[i].Name == "Backstage passes to a TAFKAL80ETC concert")
+                else if (item.Name == "Backstage passes to a TAFKAL80ETC concert")
                 {
-                    UpdateBackstage(Items[i]);
+                    UpdateBackstage(item);
                 }
-                else if (Items[i].Name == "Sulfuras, Hand of Ragnaros")
+                else if (item.Name == "Sulfuras, Hand of Ragnaros")
                 {
-                    UpdateSulfuras(Items[i]);
+                    UpdateSulfuras(item);
                 }
-                else if (Items[i].Name == "Conjured Mana Cake")
+                else if (item.Name == "Conjured Mana Cake")
                 {
-
+                    UpdateConjured(item);
                 }
                 else
                 {
-                    UpdateTheRest(Items[i]);
+                    UpdateTheRest(item);
                 }
             }
             return;
